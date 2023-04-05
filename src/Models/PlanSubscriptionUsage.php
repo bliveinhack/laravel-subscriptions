@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Rinvex\Support\Traits\ValidatingTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * Rinvex\Subscriptions\Models\PlanSubscriptionUsage.
@@ -23,7 +22,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
  * @property \Carbon\Carbon|null $deleted_at
- * @property-read \Rinvex\Subscriptions\Models\PlanFeature      $feature
+ * @property-read \Rinvex\Subscriptions\Models\Feature      $feature
  * @property-read \Rinvex\Subscriptions\Models\PlanSubscription $subscription
  *
  * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Subscriptions\Models\PlanSubscriptionUsage byFeatureSlug($featureSlug)
@@ -39,7 +38,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class PlanSubscriptionUsage extends Model
 {
-    use HasFactory;
     use SoftDeletes;
     use ValidatingTrait;
 
@@ -97,7 +95,7 @@ class PlanSubscriptionUsage extends Model
         $this->setTable(config('rinvex.subscriptions.tables.plan_subscription_usage'));
         $this->mergeRules([
             'subscription_id' => 'required|integer|exists:'.config('rinvex.subscriptions.tables.plan_subscriptions').',id',
-            'feature_id' => 'required|integer|exists:'.config('rinvex.subscriptions.tables.plan_features').',id',
+            'feature_id' => 'required|integer|exists:'.config('rinvex.subscriptions.tables.features').',id',
             'used' => 'required|integer',
             'valid_until' => 'nullable|date',
         ]);
