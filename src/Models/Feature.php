@@ -2,22 +2,22 @@
 
 declare(strict_types=1);
 
-namespace Rinvex\Subscriptions\Models;
+namespace bliveinhack\Subscriptions\Models;
 
 use Carbon\Carbon;
 use Spatie\Sluggable\SlugOptions;
-use Rinvex\Support\Traits\HasSlug;
+use bliveinhack\Support\Traits\HasSlug;
 use Spatie\EloquentSortable\Sortable;
 use Illuminate\Database\Eloquent\Model;
-use Rinvex\Subscriptions\Services\Period;
-use Rinvex\Support\Traits\HasTranslations;
-use Rinvex\Support\Traits\ValidatingTrait;
+use bliveinhack\Subscriptions\Services\Period;
+use bliveinhack\Support\Traits\HasTranslations;
+use bliveinhack\Support\Traits\ValidatingTrait;
 use Spatie\EloquentSortable\SortableTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * Rinvex\Subscriptions\Models\Feature.
+ * bliveinhack\Subscriptions\Models\Feature.
  *
  * @property int                 $id
  * @property int                 $plan_id
@@ -31,23 +31,23 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
  * @property \Carbon\Carbon|null $deleted_at
- * @property-read \Rinvex\Subscriptions\Models\Plan                                                             $plan
- * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Subscriptions\Models\PlanSubscriptionUsage[] $usage
+ * @property-read \bliveinhack\Subscriptions\Models\Plan                                                             $plan
+ * @property-read \Illuminate\Database\Eloquent\Collection|\bliveinhack\Subscriptions\Models\PlanSubscriptionUsage[] $usage
  *
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Subscriptions\Models\Feature byPlanId($planId)
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Subscriptions\Models\Feature ordered($direction = 'asc')
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Subscriptions\Models\Feature whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Subscriptions\Models\Feature whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Subscriptions\Models\Feature whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Subscriptions\Models\Feature whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Subscriptions\Models\Feature whereTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Subscriptions\Models\Feature wherePlanId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Subscriptions\Models\Feature whereResettableInterval($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Subscriptions\Models\Feature whereResettablePeriod($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Subscriptions\Models\Feature whereSlug($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Subscriptions\Models\Feature whereSortOrder($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Subscriptions\Models\Feature whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Subscriptions\Models\Feature whereValue($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\bliveinhack\Subscriptions\Models\Feature byPlanId($planId)
+ * @method static \Illuminate\Database\Eloquent\Builder|\bliveinhack\Subscriptions\Models\Feature ordered($direction = 'asc')
+ * @method static \Illuminate\Database\Eloquent\Builder|\bliveinhack\Subscriptions\Models\Feature whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\bliveinhack\Subscriptions\Models\Feature whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\bliveinhack\Subscriptions\Models\Feature whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\bliveinhack\Subscriptions\Models\Feature whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\bliveinhack\Subscriptions\Models\Feature whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\bliveinhack\Subscriptions\Models\Feature wherePlanId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\bliveinhack\Subscriptions\Models\Feature whereResettableInterval($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\bliveinhack\Subscriptions\Models\Feature whereResettablePeriod($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\bliveinhack\Subscriptions\Models\Feature whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\bliveinhack\Subscriptions\Models\Feature whereSortOrder($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\bliveinhack\Subscriptions\Models\Feature whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\bliveinhack\Subscriptions\Models\Feature whereValue($value)
  * @mixin \Eloquent
  */
 class Feature extends Model implements Sortable
@@ -129,9 +129,9 @@ class Feature extends Model implements Sortable
      */
     public function __construct(array $attributes = [])
     {
-        $this->setTable(config('rinvex.subscriptions.tables.features'));
+        $this->setTable(config('bliveinhack.subscriptions.tables.features'));
         $this->mergeRules([
-            'slug' => 'required|alpha_dash|max:150|unique:'.config('rinvex.subscriptions.tables.features').',slug',
+            'slug' => 'required|alpha_dash|max:150|unique:'.config('bliveinhack.subscriptions.tables.features').',slug',
             'name' => 'required|string|strip_tags|max:150',
             'description' => 'nullable|string|max:32768',
             'sort_order' => 'nullable|integer|max:100000',
@@ -172,7 +172,7 @@ class Feature extends Model implements Sortable
      */
     public function usage(): HasMany
     {
-        return $this->hasMany(config('rinvex.subscriptions.models.plan_subscription_usage'), 'feature_id', 'id');
+        return $this->hasMany(config('bliveinhack.subscriptions.models.plan_subscription_usage'), 'feature_id', 'id');
     }
 
     /**
@@ -197,8 +197,8 @@ class Feature extends Model implements Sortable
     public function plans(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(
-            config('rinvex.subscriptions.models.plan'),
-            config('rinvex.subscriptions.tables.feature_plan'),
+            config('bliveinhack.subscriptions.models.plan'),
+            config('bliveinhack.subscriptions.tables.feature_plan'),
             'feature_id',
             'plan_id'
         )

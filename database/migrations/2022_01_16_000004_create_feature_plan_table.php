@@ -10,20 +10,20 @@ class CreateFeaturePlanTable extends Migration
 {
     public function up(): void
     {
-        if (Schema::hasColumn(config('rinvex.subscriptions.tables.features'), 'plan_id')) {
-            Schema::table(config('rinvex.subscriptions.tables.features'), function (Blueprint $table) {
+        if (Schema::hasColumn(config('bliveinhack.subscriptions.tables.features'), 'plan_id')) {
+            Schema::table(config('bliveinhack.subscriptions.tables.features'), function (Blueprint $table) {
                 $table->dropForeign('plan_id');
                 $table->dropColumn('plan_id');
             });
         }
 
-        Schema::create(config('rinvex.subscriptions.tables.feature_plan'), function (Blueprint $table) {
+        Schema::create(config('bliveinhack.subscriptions.tables.feature_plan'), function (Blueprint $table) {
             $table->foreignId('plan_id')
-                ->constrained(config('rinvex.subscriptions.tables.plans'))
+                ->constrained(config('bliveinhack.subscriptions.tables.plans'))
                 ->cascadeOnDelete();
 
             $table->foreignId('feature_id')
-                ->constrained(config('rinvex.subscriptions.tables.features'))
+                ->constrained(config('bliveinhack.subscriptions.tables.features'))
                 ->cascadeOnDelete();
 
             $table->primary(['plan_id', 'feature_id']);
@@ -37,6 +37,6 @@ class CreateFeaturePlanTable extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists(config('rinvex.subscriptions.tables.feature_plan'));
+        Schema::dropIfExists(config('bliveinhack.subscriptions.tables.feature_plan'));
     }
 }
