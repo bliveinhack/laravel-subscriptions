@@ -6,7 +6,7 @@ namespace bliveinhack\Subscriptions\Providers;
 
 use bliveinhack\Subscriptions\Models\Plan;
 use Illuminate\Support\ServiceProvider;
-use rinvex\Support\Traits\ConsoleTools;
+use Rinvex\Support\Traits\ConsoleTools;
 use bliveinhack\Subscriptions\Models\Feature;
 use bliveinhack\Subscriptions\Models\PlanSubscription;
 use bliveinhack\Subscriptions\Models\PlanSubscriptionUsage;
